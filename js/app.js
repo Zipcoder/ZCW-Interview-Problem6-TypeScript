@@ -61,9 +61,9 @@ var Problem6 = (function () {
     Problem6.prototype.convertNumberOverTwenty = function (number) {
         var convertNumber = Math.floor(number / 10);
         var secondDigit = number - (convertNumber * 10);
-        return this.getfirstDegit(convertNumber) + " " + this.getSecondDigit(secondDigit);
+        return this.getfirstDigit(convertNumber) + " " + this.getSecondDigit(secondDigit);
     };
-    Problem6.prototype.getfirstDegit = function (digit) {
+    Problem6.prototype.getfirstDigit = function (digit) {
         var options = ["Twenty", "Thirty", "Forty", "Fifty"];
         return options[digit - 2];
     };

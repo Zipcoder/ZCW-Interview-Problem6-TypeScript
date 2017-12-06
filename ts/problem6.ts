@@ -36,10 +36,10 @@ class Problem6 {
   convertNumberOverTwenty(number:number):string{
     let convertNumber:number = Math.floor(number/10);
     let secondDigit:number = number-(convertNumber*10);
-    return this.getfirstDegit(convertNumber)+" "+this.getSecondDigit(secondDigit);
+    return this.getfirstDigit(convertNumber)+" "+this.getSecondDigit(secondDigit);
   }
 
-  getfirstDegit(digit:number):string{
+  getfirstDigit(digit:number):string{
     let options:string[] = ["Twenty","Thirty","Forty","Fifty"];
     return options[digit-2];
   }
