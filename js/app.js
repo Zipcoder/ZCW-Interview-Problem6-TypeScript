@@ -3,27 +3,32 @@ var ArmyTalk = /** @class */ (function () {
         this.verbalizeHours = function (hours) {
             var output = "";
             if (hours < 10) {
-                output += "Zero " + LiteralNums[hours] + " Hundred";
+                output += "Zero " + LiteralNums[hours];
             }
-            else if (hours == 0 || hours > 9) {
-                output += LiteralNums[hours] + " Hundred";
+            else if (hours > 20) {
+                output += LiteralNums[hours - hours % 10] + "-" + LiteralNums[hours % 10];
             }
+            else if (hours > 10) {
+                output += LiteralNums[hours];
+            }
+            return output + " Hundred";
+        };
+        this.verbalizeMinutes = function (minutes) {
+            var output = "";
+            if (minutes == 0) {
+            }
+            else if (minutes < 10) {
+                output += " and Zero " + LiteralNums[minutes];
+            }
+            else if (minutes < 21 || minutes % 10 == 0) {
+                output += " and " + LiteralNums[minutes];
+            }
+            else {
+                output += " and " + LiteralNums[minutes - minutes % 10] + "-" + LiteralNums[minutes % 10];
+            }
+            output += " hours";
             return output;
         };
-        // verbalizeMinutes = function (minutes:number){
-        //     var output="";
-        //     if(minutes == 0){
-        //     }else if(minutes <10){
-        //         output += " and Zero "+LiteralNums[minutes];
-        //     }
-        //     else if(minutes<21 || minutes%10==0){
-        //         output +=" and " + LiteralNums[minutes];
-        //     }else{
-        //         output += " and "+ LiteralNums[minutes-minutes%10] + "-"+ LiteralNums[minutes%10];
-        //     }
-        //     output += " hours";
-        //     return output;
-        //     }
     }
     return ArmyTalk;
 }());
@@ -59,7 +64,7 @@ var Time = /** @class */ (function () {
     function Time(hours, minutes, meridiem) {
         this.toString = function () {
             var armyTalk = new ArmyTalk();
-            console.log(armyTalk.verbalizeHours(this.hours)); // armyTalk.verbalizeMinutes(this.minutes));
+            return armyTalk.verbalizeHours(this.hours) + armyTalk.verbalizeMinutes(this.minutes);
         };
         this.hours = hours;
         this.minutes = minutes;
@@ -85,8 +90,13 @@ var TimeParser = /** @class */ (function () {
         };
         this.extractHoursAndConvert = function (input) {
             var hours;
+            //11:37
             if (input.length == 7) {
                 hours = parseInt(input.substring(0, 2));
+                if (this.isAm(input) && hours == 12) {
+                    hours = 0;
+                    return hours;
+                }
             }
             else if (input.length == 6) {
                 hours = parseInt(input.substring(0, 1));
@@ -131,12 +141,21 @@ var TimeParser = /** @class */ (function () {
 // console.log("minutes " + s.match(/\d{2}(?=[a|A|p|P])/)[2]);
 console.log("Some console test cases.");
 var timeParser = new TimeParser();
-var time = timeParser.makeTimeFromString("1:37pm");
-console.log(time.toString());
-// time = timeParser.makeTimeFromString("11:37pm");
-// console.log(time.toString());
-// time = timeParser.makeTimeFromString("2:37am");
-// console.log(time.toString());
-// time = timeParser.makeTimeFromString("4:05am");
-// console.log(time.toString());
+// var armyTalk = new ArmyTalk();
+// var hoursTest = timeParser.extractHoursAndConvert("10:23pm");
+// var wordOutput = armyTalk.verbalizeHours(hoursTest);
+// console.log(hoursTest);
+// console.log(wordOutput);
+var time = timeParser.makeTimeFromString("8:37pm");
+console.log("Input = 8:37pm, Output = " + time.toString());
+time = timeParser.makeTimeFromString("10:23pm");
+console.log("Input = 10:23pm, Output = " + time.toString());
+time = timeParser.makeTimeFromString("3:37pm");
+console.log("Input = 3:37pm, Output = " + time.toString());
+time = timeParser.makeTimeFromString("12:11am");
+console.log("Input = 12:11am, Output = " + time.toString());
+time = timeParser.makeTimeFromString("2:37am");
+console.log("Input = 2:37am, Output = " + time.toString());
+time = timeParser.makeTimeFromString("4:05am");
+console.log("Input = 4:05am, Output = " + time.toString());
 //# sourceMappingURL=app.js.map

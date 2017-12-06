@@ -14,7 +14,7 @@ class Time{
 
     toString = function(){
         var armyTalk = new ArmyTalk()
-        console.log(armyTalk.verbalizeHours(this.hours))// armyTalk.verbalizeMinutes(this.minutes));
+        return armyTalk.verbalizeHours(this.hours) + armyTalk.verbalizeMinutes(this.minutes);
 
     }
 }

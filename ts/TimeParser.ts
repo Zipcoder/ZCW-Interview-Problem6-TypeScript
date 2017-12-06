@@ -21,9 +21,13 @@ splitWithRegex = function(input: String){
 }
 extractHoursAndConvert = function(input: String){
     var hours: number;
-
+//11:37
     if (input.length ==7){
         hours = parseInt(input.substring(0,2));
+        if(this.isAm(input)&& hours ==12){
+            hours = 0;
+            return hours;
+        }
     }else if (input.length ==6){
         hours = parseInt(input.substring(0,1));
     }
