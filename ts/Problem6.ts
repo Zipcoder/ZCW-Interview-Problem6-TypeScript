@@ -39,7 +39,7 @@ class MilitaryTime {
         for (var ind in timeToInt) {
             var t = timeToInt[ind];
             if (t < 10)
-                this.displayElement.innerHTML += "Zero  " + times[t] + delimiter;
+                this.displayElement.innerHTML += "Zero  " + (t == 0 ? delimiter : times[t] + delimiter);
             else if (t < 20)
                 this.displayElement.innerHTML += times[t] + delimiter;
             else {
